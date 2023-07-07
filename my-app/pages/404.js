@@ -7,12 +7,7 @@ import {
 } from "@heroicons/react/24/solid";
 
 const links = [
-  {
-    name: "Contact us",
-    href: "/contact",
-    description: "contact us by clicking on this section.",
-    icon: ComputerDesktopIcon,
-  },
+
   {
     name: "Pools",
     href: "/pool",
@@ -25,12 +20,7 @@ const links = [
     description: "Make an exchange.",
     icon: WalletIcon,
   },
-  {
-    name: "Blog",
-    href: "/blogs",
-    description: "Read our latest news and articles.",
-    icon: RssIcon,
-  },
+
 ];
 
 export default function Example() {
