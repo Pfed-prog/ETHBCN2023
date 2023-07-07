@@ -15,7 +15,7 @@
     "autoprefixer": "^10.4.13",
     "eslint": "8.28.0",
     "eslint-config-next": "13.4.9",
-    "ethers": "^5.7.2",
+    "ethers": "^6.6.2",
     "iron-session": "^6.3.1",
     "next": "^13.0.7",
     "postcss": "^8.4.19",
