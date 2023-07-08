@@ -11,12 +11,12 @@ export default function Index() {
               <div className="sm:text-center lg:text-center">
                 <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
                   <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-sky-100 to-sky-500 ">
-                    TradeCoin
+                    XDC_DID
                   </span>{" "}
                 </h1>
                 <p className="mt-3 font-bold text-base text-white text-center sm:mx-auto sm:mt-5 sm:max-w-xl sm:text-lg  md:text-xl lg:mx-0">
                   <strong>
-                    TradeCoin provides DeFi tools for token holders & businesses
+                    XDC_DID provides DeFi tools for token holders & businesses
                     to buy, trade, create, and secure crypto assets with
                     confidence.
                   </strong>
@@ -60,9 +60,9 @@ export default function Index() {
 
                   <p className="mt-6 text-lg leading-8 text-gray-900 sm:text-center">
                     <strong>
-                      TradeCoin provides DeFi tools for token holders &
-                      businesses to buy, trade, create, and secure crypto assets
-                      with confidence.
+                      XDC_DID provides DeFi tools for token holders & businesses
+                      to buy, trade, create, and secure crypto assets with
+                      confidence.
                     </strong>
                   </p>
                   <div className="mt-8 flex items-center gap-x-4 justify-center">
@@ -181,7 +181,6 @@ export default function Index() {
                   </div>
                 </div>
 
-
                 <div className="mt-8">
                   <div className="bg-white py-24 sm:py-12">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -193,7 +192,7 @@ export default function Index() {
                           width={158}
                           height={48}
                         />
-                       
+
                         <img
                           className="col-span-2 col-start-2 max-h-12 w-full object-contain sm:col-start-auto lg:col-span-1"
                           src="https://www.bcbitcoin.com/site/assets/files/110712/image-1.png"

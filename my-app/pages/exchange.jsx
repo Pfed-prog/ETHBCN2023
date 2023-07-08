@@ -44,7 +44,6 @@ function classNames(...classes) {
 
 export default function Exchange() {
   const [query, setQuery] = useState("");
-  const [show, setShow] = useState(true);
   const [openTokenA, setOpenTokenA] = useState(false);
   const [openTokenB, setOpenTokenB] = useState(false);
 
@@ -70,11 +69,6 @@ export default function Exchange() {
     const pairAddress = await contract
       .getPair(tokenA.address, tokenB.address)
       .call();
-
-    if (pairAddress === "410000000000000000000000000000000000000000") {
-      console.log("create a pair first");
-      return;
-    }
 
     const pair = await tronWeb.contract(abiPair, pairAddress);
 

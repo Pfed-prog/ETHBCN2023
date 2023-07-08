@@ -14,12 +14,6 @@ function classNames(...classes) {
 }
 
 export default function Pool() {
-  const fetchPools = async (name) => {
-    const res = await fetch(`/api/${name}`);
-    return res.json();
-  };
-
-  const { data, status } = useQuery(["pools"], () => fetchPools("test"));
   const [tokenA, setTokenA] = useState("");
   const [tokenB, setTokenB] = useState("");
 
@@ -28,43 +22,65 @@ export default function Pool() {
 
   const [withdrawalQuantity, setWithdrawalQuantity] = useState("");
 
+  const fetchPools = async (name) => {
+    const res = await fetch(`/api/${name}`);
+    return res.json();
+  };
+
+  var initialChain = "xdc";
+
+  const { chain } = useNetwork();
+
+  if (chain?.id && (chain.id === 80001 || chain.id === 50)) {
+    initialChain = chain.network;
+  }
+
+  const { data, status } = useQuery(["pools"], () => fetchPools(initialChain));
+
+  const { address } = useAccount();
+
   async function startUpload() {
-    const { addressFactory, abiFactory } = getContractInfo();
-    const contract = await tronWeb.contract(abiFactory, addressFactory);
-    await contract.createPair(tokenA, tokenB).send({ feeLimit: 4000000000 });
+    const { addressFactory, abiFactory } = getContractInfo(chain.id);
+    const contract = new ethers.Contract(addressFactory, abiFactory, signer);
+    await contract.createPair(tokenA, tokenB),
+      {
+        gasLimit: 100000,
+      };
   }
 
   async function addLiquidity(address0, address1, pairAddress) {
     const { abiERC20 } = getERC20();
     const { abiPair } = getPair();
-    const address = await tronWeb.defaultAddress.base58;
 
-    const token0 = await tronWeb.contract(abiERC20, address0);
-    const token1 = await tronWeb.contract(abiERC20, address1);
-    const pair = await tronWeb.contract(abiPair, pairAddress);
+    const token0 = new ethers.Contract(address0, abiERC20, signer);
+    const token1 = new ethers.Contract(address1, abiERC20, signer);
+    const pair = new ethers.Contract(pairAddress, abiPair, signer);
 
-    await token0
-      .transfer(pairAddress, expandTo18Decimals(tokenAQuantity))
-      .send();
+    await token0.transfer(pairAddress, expandTo18Decimals(tokenAQuantity), {
+      gasLimit: 100000,
+    });
 
-    await token1
-      .transfer(pairAddress, expandTo18Decimals(tokenBQuantity))
-      .send();
+    await token1.transfer(pairAddress, expandTo18Decimals(tokenBQuantity), {
+      gasLimit: 100000,
+    });
 
-    await pair.mint(address).send();
+    await pair.mint(address, {
+      gasLimit: 200000,
+    });
   }
 
   async function removeLiquidity(pairAddress) {
     const { abiPair } = getPair();
-    const address = await tronWeb.defaultAddress.base58;
 
-    const pair = await tronWeb.contract(abiPair, pairAddress);
+    const pair = new ethers.Contract(pairAddress, abiPair, signer);
 
-    await pair
-      .transfer(pair.address, expandTo18Decimals(withdrawalQuantity))
-      .send();
+    await pair.transfer(pair.address, expandTo18Decimals(withdrawalQuantity), {
+      gasLimit: 60000,
+    });
 
-    await pair.burn(address).send();
+    await pair.burn(address, {
+      gasLimit: 200000,
+    });
   }
 
   return (
