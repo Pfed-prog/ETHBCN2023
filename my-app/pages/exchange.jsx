@@ -1,10 +1,13 @@
-import { getContractInfo, getERC20, getPair } from "@/utils/contracts";
 import { Dialog, Transition } from "@headlessui/react";
 import { Combobox } from "@headlessui/react";
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { ethers } from "ethers";
 import { Fragment, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useAccount, useSigner } from "wagmi";
+
+import { getContractInfo, getERC20, getPair } from "@/utils/contracts";
 
 function expandTo18Decimals(n) {
   return ethers.BigNumber.from(n).mul(ethers.BigNumber.from(10).pow(18));
@@ -51,6 +54,15 @@ export default function Exchange() {
 
   const [swapAmount, setSwapAmount] = useState(0);
 
+  /* const fetchTxs = async () => {
+    const res = await fetch(`/api/xdc/txs`);
+    return res.json();
+  }; */
+
+  // const { data: transactions, status } = useQuery(["txs"], () => fetchTxs());
+  //const { data: signer } = useSigner();
+  //const { address } = useAccount();
+
   const filteredTokens =
     query === ""
       ? tokens
@@ -59,26 +71,24 @@ export default function Exchange() {
         });
 
   async function swap() {
-    const { addressFactory, abiFactory } = getContractInfo();
+    const { addressFactory, abiFactory } = getContractInfo(50);
     const { abiPair } = getPair();
     const { abiERC20 } = getERC20();
 
-    const contract = await tronWeb.contract(abiFactory, addressFactory);
+    const contract = new ethers.Contract(addressFactory, abiFactory, signer);
+    const pairAddress = await contract.getPair(tokenA, tokenB);
+    const pair = new ethers.Contract(pairAddress, abiPair, signer);
 
-    const pairAddress = await contract
-      .getPair(tokenA.address, tokenB.address)
-      .call();
+    const orderIn = (await pair.token0()) === tokenA ? 0 : 1;
+    const orderOut = (await pair.token1()) === tokenB ? 1 : 0;
 
-    const pair = await tronWeb.contract(abiPair, pairAddress);
+    const token = new ethers.Contract(tokenA, abiERC20, signer);
 
-    const orderIn = (await pair.token0().call()) === tokenA ? 0 : 1;
-    const orderOut = (await pair.token1().call()) === tokenB ? 1 : 0;
+    await token.transfer(pairAddress, expandTo18Decimals(swapAmount), {
+      gasLimit: 60000,
+    });
 
-    const token = await tronWeb.contract(abiERC20, tokenA.address);
-
-    await token.transfer(pairAddress, expandTo18Decimals(swapAmount)).send();
-
-    const Preserves = await pair.getReserves().call();
+    const Preserves = await pair.getReserves();
 
     var amountInWithFee = expandTo18Decimals(swapAmount).mul(996);
 
@@ -88,9 +98,9 @@ export default function Exchange() {
 
     const expectedOutputAmount = ethers.BigNumber.from(String(amountOut));
 
-    const address = await tronWeb.defaultAddress.base58;
-
-    await pair.swap(0, expectedOutputAmount, address, "0x").send();
+    await pair.swap(0, expectedOutputAmount, address, "0x", {
+      gasLimit: 200000,
+    });
   }
 
   return (
