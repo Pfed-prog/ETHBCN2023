@@ -5,6 +5,8 @@ import { useQuery } from "@tanstack/react-query";
 import { ethers } from "ethers";
 import React, { useState } from "react";
 
+import { useAccount } from "wagmi";
+
 function expandTo18Decimals(n) {
   return ethers.BigNumber.from(n).mul(ethers.BigNumber.from(10).pow(18));
 }
@@ -22,25 +24,17 @@ export default function Pool() {
 
   const [withdrawalQuantity, setWithdrawalQuantity] = useState("");
 
-  const fetchPools = async (name) => {
-    const res = await fetch(`/api/${name}`);
+  const fetchPools = async () => {
+    const res = await fetch(`/api/xdc`);
     return res.json();
   };
-
-  var initialChain = "xdc";
-
-  const { chain } = useNetwork();
-
-  if (chain?.id && (chain.id === 80001 || chain.id === 50)) {
-    initialChain = chain.network;
-  }
 
   const { data, status } = useQuery(["pools"], () => fetchPools(initialChain));
 
   const { address } = useAccount();
 
   async function startUpload() {
-    const { addressFactory, abiFactory } = getContractInfo(chain.id);
+    const { addressFactory, abiFactory } = getContractInfo(50);
     const contract = new ethers.Contract(addressFactory, abiFactory, signer);
     await contract.createPair(tokenA, tokenB),
       {

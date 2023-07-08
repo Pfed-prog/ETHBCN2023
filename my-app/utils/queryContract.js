@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import { getContractInfo } from "@/utils/contracts";
-import UniswapV2Pair from "@/utils/contracts/UniswapV2Pair.json";
+import Pair from "@/utils/contracts/Pair.json";
 import ERC20 from "@/utils/contracts/ERC20.json";
 
 export async function queryContract() {
@@ -27,7 +27,7 @@ export async function queryContract() {
       const pairAddress = await contract.allPairs(i - 1);
       const Pair = new ethers.Contract(
         pairAddress,
-        UniswapV2Pair.abi,
+        Pair.abi,
         customHttpProvider
       );
 
@@ -94,7 +94,7 @@ export async function queryPrices() {
       const pairAddress = await contract.allPairs(i - 1);
       const Pair = new ethers.Contract(
         pairAddress,
-        UniswapV2Pair.abi,
+        Pair.abi,
         customHttpProvider
       );
 

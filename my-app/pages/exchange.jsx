@@ -2,7 +2,6 @@ import { getContractInfo, getERC20, getPair } from "@/utils/contracts";
 import { Dialog, Transition } from "@headlessui/react";
 import { Combobox } from "@headlessui/react";
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { XMarkIcon, ExclamationTriangleIcon } from "@heroicons/react/20/solid";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { ethers } from "ethers";
 import { Fragment, useState } from "react";
