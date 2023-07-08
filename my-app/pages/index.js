@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Index() {
   return (
     <div>
-      <div className="relative overflow-hidden bg-no-repeat bg-cover bg-center bg-[url('/bg2.jpg')]">
+      <div className="relative overflow-hidden bg-no-repeat bg-cover bg-center bg-[url('/XDC.png')]">
         <div className="mx-auto max-w-2xl">
           <div className="xl:pb-32 pb-10 text-center">
             <main className="mx-auto mt-10 max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-48">
@@ -49,23 +49,22 @@ export default function Index() {
           <div className="relative px-6 lg:px-8">
             <div className="mx-auto max-w-3xl pt-5 pb-32 mt-4 sm:pb-40">
               <div>
-                <div>
-                  <h1 className="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl">
-                    How does it{" "}
-                    <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-pink-400 to-red-600 ">
-                      Work?
-                    </span>
-                  </h1>
+                <h1 className="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl">
+                  Personalized{" "}
+                  <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-pink-400 to-red-600 ">
+                    DeFi Experience{" "}
+                  </span>
+                </h1>
 
-                  <p className="mt-6 text-lg leading-8 text-gray-900 sm:text-center">
-                    <strong>
-                      With Visage Finance, you're not just another wallet
-                      address. Our platform lets you connect your XDC wallet to
-                      your ENS, allowing you to send and receive assets using
-                      your ENS handle with XDC efficiency.
-                    </strong>
-                  </p>
-                </div>
+                <p className="mt-6 text-lg leading-8 text-gray-900 sm:text-center">
+                  <strong>
+                    With Visage Finance, you're not just another wallet address.
+                    Our platform lets you connect your XDC wallet to your ENS,
+                    allowing you to send and receive assets using your ENS
+                    handle with XDC efficiency.
+                  </strong>
+                </p>
+
                 <div className="mt-1 relative overflow-hidden  flex items-center justify-center">
                   <Image
                     alt=""
@@ -75,111 +74,123 @@ export default function Index() {
                     className="justify-center flex items-center"
                   />
                 </div>
-                <div>
-                  <div className="mt-8">
-                    <h1 className="text-4xl font-bold tracking-tight sm:text-center sm:text-5xl">
-                      <strong>Pool</strong>
-                    </h1>
-                    <p className="mt-6 text-lg leading-8 text-black sm:text-center">
-                      <strong>What Is an</strong>
-                      <span className="font-extrabold  text-transparent bg-clip-text bg-gradient-to-br from-pink-400 to-red-600 sm:text-center">
-                        {" "}
-                        Automated Market Maker?
-                      </span>
-                    </p>
-                    <p className="mt-4 text-lg leading-8 text-gray-900 sm:text-center">
-                      <strong>
-                        Automated market makers incentivize users to become
-                        liquidity providers in exchange for a share of
-                        transaction fees and free tokens.
-                      </strong>
-                    </p>
 
-                    <div className="mt-3 relative overflow-hidden  flex items-center justify-center">
-                      <Image
-                        alt=""
-                        src="/photo5.jpg"
-                        width="350"
-                        height="350"
-                        className="justify-center flex items-center"
-                        allowFullScreen
-                      />
-                    </div>
-                    <div className="mt-3 flex items-center gap-x-4 justify-center">
-                      <div className=" sm:mb-8 sm:flex sm:justify-center">
-                        <div className="relative overflow-hidden rounded-full py-1.5 px-4 text-sm leading-6 bg-gradient-to-br from-pink-400 to-red-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                          <span className="text-gray-900 ">
-                            <Link
-                              href="/pool"
-                              className="font-semibold  text-white"
-                            >
-                              View our pool
-                            </Link>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-center sm:text-5xl">
+                  <strong>Secure Environment</strong>
+                </h1>
+
+                <p className="mt-6 text-lg leading-8 text-gray-900 sm:text-center">
+                  <strong>
+                    We value security and trust in the DeFi space. Visage
+                    Finance provides the ability to synchronize user reputation
+                    between the XDC and Ethereum networks. This not only
+                    promotes a safer DeFi experience, but it also increases
+                    trust and confidence among users and stakeholders within the
+                    ecosystem.
+                  </strong>
+                </p>
+
+                <div className="mt-1 relative overflow-hidden flex items-center justify-center">
+                  <Image
+                    alt=""
+                    src="/Logo.png"
+                    width="340"
+                    height="340"
+                    className="justify-center flex items-center"
+                  />
                 </div>
 
-                <div>
-                  <div className="mt-8">
-                    <h1 className="text-4xl font-bold tracking-tight sm:text-center sm:text-5xl">
-                      Token Exchange
-                    </h1>
-                    <p className="mt-6 text-lg leading-8 text-black sm:text-center">
-                      <strong>Do you want to</strong>
-                      <span className="font-extrabold  text-transparent bg-clip-text bg-gradient-to-br from-pink-400 to-red-600 sm:text-center">
-                        {" "}
-                        exchange cryptocurrency?
-                      </span>
-                    </p>
+                <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-center sm:text-5xl">
+                  <strong>Join the Future of DeFi</strong>
+                </h1>
 
-                    <div className="mt-4 relative overflow-hidden  flex items-center justify-center">
-                      <Image
-                        alt=""
-                        src="/photo3.jpg"
-                        width="340"
-                        height="350"
-                        className="justify-center flex items-center"
-                      />
-                    </div>
-                    <div className="mt-3 flex items-center gap-x-4 justify-center">
-                      <div className=" sm:mb-8 sm:flex sm:justify-center">
-                        <div className="relative overflow-hidden rounded-full py-1.5 px-4 text-sm leading-6 bg-gradient-to-br from-pink-400 to-red-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                          <span className="text-gray-900">
-                            <Link
-                              href="/exchange"
-                              className="font-semibold text-white"
-                            >
-                              View our Exchange
-                            </Link>
-                          </span>
-                        </div>
+                <p className="mt-6 text-lg leading-8 text-gray-900 sm:text-center">
+                  <strong>
+                    Join Visage Finance and embark on a personalized DeFi
+                    journey. Send, receive, and manage your assets in a way
+                    that's uniquely yours. Because in the world of DeFi, we
+                    believe that you should be more than just a wallet address.
+                    With Visage Finance, DeFi has a human face.
+                  </strong>
+                </p>
+
+                <div className="mt-6">
+                  <h1 className="text-4xl font-bold tracking-tight sm:text-center sm:text-5xl">
+                    <strong>Pool</strong>
+                  </h1>
+                  <p className="mt-6 text-lg leading-8 text-black sm:text-center">
+                    <strong>What Is an</strong>
+                    <span className="font-extrabold  text-transparent bg-clip-text bg-gradient-to-br from-pink-400 to-red-600 sm:text-center">
+                      {" "}
+                      Automated Market Maker?
+                    </span>
+                  </p>
+                  <p className="mt-4 text-lg leading-8 text-gray-900 sm:text-center">
+                    <strong>
+                      Automated market makers incentivize users to become
+                      liquidity providers in exchange for a share of transaction
+                      fees and free tokens.
+                    </strong>
+                  </p>
+
+                  <div className="mt-3 relative overflow-hidden flex items-center justify-center">
+                    <Image
+                      alt=""
+                      src="/photo5.jpg"
+                      width="350"
+                      height="350"
+                      className="justify-center flex items-center"
+                      allowFullScreen
+                    />
+                  </div>
+                  <div className="mt-3 flex items-center gap-x-4 justify-center">
+                    <div className=" sm:mb-8 sm:flex sm:justify-center">
+                      <div className="relative overflow-hidden rounded-full py-1.5 px-4 text-sm leading-6 bg-gradient-to-br from-pink-400 to-red-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+                        <span className="text-gray-900 ">
+                          <Link
+                            href="/pool"
+                            className="font-semibold  text-white"
+                          >
+                            View our pool
+                          </Link>
+                        </span>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <div className="mt-8">
-                  <div className="bg-white py-24 sm:py-12">
-                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                      <div className="mx-auto grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-12 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 sm:gap-y-14 lg:mx-0 lg:max-w-none lg:grid-cols-5">
-                        <img
-                          className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
-                          src="https://mms.businesswire.com/media/20211123005573/en/929867/23/vercel-logo-freelogovectors.net.jpg"
-                          alt="Transistor"
-                          width={158}
-                          height={48}
-                        />
+                  <h1 className="text-4xl font-bold tracking-tight sm:text-center sm:text-5xl">
+                    Token Exchange
+                  </h1>
+                  <p className="mt-6 text-lg leading-8 text-black sm:text-center">
+                    <strong>Do you want to</strong>
+                    <span className="font-extrabold  text-transparent bg-clip-text bg-gradient-to-br from-pink-400 to-red-600 sm:text-center">
+                      {" "}
+                      exchange cryptocurrency?
+                    </span>
+                  </p>
 
-                        <img
-                          className="col-span-2 col-start-2 max-h-12 w-full object-contain sm:col-start-auto lg:col-span-1"
-                          src="https://www.bcbitcoin.com/site/assets/files/110712/image-1.png"
-                          alt="Statamic"
-                          width={158}
-                          height={48}
-                        />
+                  <div className="mt-4 relative overflow-hidden flex items-center justify-center">
+                    <Image
+                      alt=""
+                      src="/photo3.jpg"
+                      width="340"
+                      height="350"
+                      className="justify-center flex items-center"
+                    />
+                  </div>
+                  <div className="mt-3 flex items-center gap-x-4 justify-center">
+                    <div className=" sm:mb-8 sm:flex sm:justify-center">
+                      <div className="relative overflow-hidden rounded-full py-1.5 px-4 text-sm leading-6 bg-gradient-to-br from-pink-400 to-red-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+                        <span className="text-gray-900">
+                          <Link
+                            href="/exchange"
+                            className="font-semibold text-white"
+                          >
+                            View our Exchange
+                          </Link>
+                        </span>
                       </div>
                     </div>
                   </div>
