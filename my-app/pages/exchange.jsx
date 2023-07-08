@@ -4,7 +4,7 @@ import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { ethers } from "ethers";
 import { Fragment, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+// import { useQuery } from "@tanstack/react-query";
 import { useAccount, useWalletClient } from "wagmi";
 
 import { getContractInfo, getERC20, getPair } from "@/utils/contracts";

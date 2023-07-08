@@ -6,6 +6,7 @@ const navigation = [
   { name: "Visage Finance", href: "/" },
   { name: "Exchange", href: "/exchange" },
   { name: "Pool", href: "/pool" },
+  { name: "Profile", href: "/profile" },
 ];
 
 function classNames(...classes) {
