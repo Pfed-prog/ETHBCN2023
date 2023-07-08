@@ -1,9 +1,9 @@
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const navigation = [
-  { name: "TradeCoin", href: "/" },
+  { name: "Visage Finance", href: "/" },
   { name: "Exchange", href: "/exchange" },
   { name: "Pool", href: "/pool" },
 ];
@@ -13,7 +13,6 @@ function classNames(...classes) {
 }
 
 const Navbar = () => {
-
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -53,7 +52,7 @@ const Navbar = () => {
               </div>
 
               <div className="flex items-center md:ml-12">
-                <ConnectButton/>
+                <ConnectButton />
               </div>
             </div>
           </div>

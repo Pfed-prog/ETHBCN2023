@@ -11,14 +11,13 @@ export default function Index() {
               <div className="sm:text-center lg:text-center">
                 <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
                   <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-sky-100 to-sky-500 ">
-                    XDC_DID
+                    Visage Finance
                   </span>{" "}
                 </h1>
                 <p className="mt-3 font-bold text-base text-white text-center sm:mx-auto sm:mt-5 sm:max-w-xl sm:text-lg  md:text-xl lg:mx-0">
                   <strong>
-                    XDC_DID provides DeFi tools for token holders & businesses
-                    to buy, trade, create, and secure crypto assets with
-                    confidence.
+                    Welcome to Visage Finance, where your personalized DeFi
+                    journey on the XDC network begins.
                   </strong>
                 </p>
 
@@ -60,31 +59,12 @@ export default function Index() {
 
                   <p className="mt-6 text-lg leading-8 text-gray-900 sm:text-center">
                     <strong>
-                      XDC_DID provides DeFi tools for token holders & businesses
-                      to buy, trade, create, and secure crypto assets with
-                      confidence.
+                      With Visage Finance, you're not just another wallet
+                      address. Our platform lets you connect your XDC wallet to
+                      your ENS, allowing you to send and receive assets using
+                      your ENS handle with XDC efficiency.
                     </strong>
                   </p>
-                  <div className="mt-8 flex items-center gap-x-4 justify-center">
-                    <Link
-                      href="/exchange"
-                      className="inline-block rounded-lg bg-indigo-500 px-4 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-indigo-500 hover:bg-indigo-700 hover:ring-indigo-700 "
-                    >
-                      Exchange{" "}
-                      <span className="text-indigo-200" aria-hidden="true">
-                        &rarr;
-                      </span>
-                    </Link>
-                    <a
-                      href="https://youtu.be/4Ft4wfPhjNw"
-                      className="inline-block bg-pink-500 rounded-lg px-4 py-1.5 text-base font-semibold leading-7 text-white ring-1 ring-pink-500 hover:bg-pink-700 hover:ring-pink-700"
-                    >
-                      Live demo video{" "}
-                      <span className="text-gray-900" aria-hidden="true">
-                        &rarr;
-                      </span>
-                    </a>
-                  </div>
                 </div>
                 <div className="mt-1 relative overflow-hidden  flex items-center justify-center">
                   <Image

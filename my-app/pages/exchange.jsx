@@ -5,7 +5,7 @@ import { CheckIcon } from "@heroicons/react/24/outline";
 import { ethers } from "ethers";
 import { Fragment, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useAccount, useSigner } from "wagmi";
+import { useAccount, useWalletClient } from "wagmi";
 
 import { getContractInfo, getERC20, getPair } from "@/utils/contracts";
 
@@ -60,8 +60,8 @@ export default function Exchange() {
   }; */
 
   // const { data: transactions, status } = useQuery(["txs"], () => fetchTxs());
-  //const { data: signer } = useSigner();
-  //const { address } = useAccount();
+  const { data: walletClient } = useWalletClient();
+  const { address } = useAccount();
 
   const filteredTokens =
     query === ""
@@ -75,14 +75,18 @@ export default function Exchange() {
     const { abiPair } = getPair();
     const { abiERC20 } = getERC20();
 
-    const contract = new ethers.Contract(addressFactory, abiFactory, signer);
+    const contract = new ethers.Contract(
+      addressFactory,
+      abiFactory,
+      walletClient
+    );
     const pairAddress = await contract.getPair(tokenA, tokenB);
-    const pair = new ethers.Contract(pairAddress, abiPair, signer);
+    const pair = new ethers.Contract(pairAddress, abiPair, walletClient);
 
     const orderIn = (await pair.token0()) === tokenA ? 0 : 1;
     const orderOut = (await pair.token1()) === tokenB ? 1 : 0;
 
-    const token = new ethers.Contract(tokenA, abiERC20, signer);
+    const token = new ethers.Contract(tokenA, abiERC20, walletClient);
 
     await token.transfer(pairAddress, expandTo18Decimals(swapAmount), {
       gasLimit: 60000,
@@ -108,7 +112,7 @@ export default function Exchange() {
       <div className="relative mx-auto max-w-sm">
         <div className="text-center">
           <h2 className="text-4xl font-bold tracking-tight text-white">
-            TradeCoin Exchange
+            Visage Finance Exchange
           </h2>
         </div>
         <div className="rounded-2xl mt-5  bg-gray-700 p-4">
@@ -216,7 +220,7 @@ export default function Exchange() {
           </div>
           <div className="rounded-2xl mt-5  bg-gray-600 p-1">
             <div className="flex justify-center items-center">
-              <span className="relative text-white  items-center justify-center rounded-md border border-transparent px-3 py-1.5 text-base font-medium text-gray-900">
+              <span className="relative text-white items-center justify-center rounded-md border border-transparent px-3 py-1.5 text-base font-medium text-gray-900">
                 {swapAmount} {tokenA.name} =
               </span>
               <span className="relative right-5 text-white inline-flex items-center justify-center rounded-md border border-transparent px-3 py-1.5 text-base font-medium text-gray-900 ">

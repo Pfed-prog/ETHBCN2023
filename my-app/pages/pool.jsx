@@ -1,11 +1,11 @@
-import { getContractInfo, getERC20, getPair } from "@/utils/contracts";
 import { Disclosure } from "@headlessui/react";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 import { ethers } from "ethers";
 import React, { useState } from "react";
-
 import { useAccount } from "wagmi";
+
+import { getContractInfo, getERC20, getPair } from "@/utils/contracts";
 
 function expandTo18Decimals(n) {
   return ethers.BigNumber.from(n).mul(ethers.BigNumber.from(10).pow(18));
@@ -82,7 +82,7 @@ export default function Pool() {
       <div className="relative mx-auto max-w-4xl">
         <div className="text-center">
           <h2 className="text-4xl font-bold tracking-tight text-white">
-            TradeCoin Pools
+            Visage Finance Pools
           </h2>
         </div>
 
