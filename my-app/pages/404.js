@@ -1,13 +1,7 @@
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
-import {
-  WalletIcon,
-  ComputerDesktopIcon,
-  QueueListIcon,
-  RssIcon,
-} from "@heroicons/react/24/solid";
+import { WalletIcon, QueueListIcon } from "@heroicons/react/24/solid";
 
 const links = [
-
   {
     name: "Pools",
     href: "/pool",
@@ -20,7 +14,6 @@ const links = [
     description: "Make an exchange.",
     icon: WalletIcon,
   },
-
 ];
 
 export default function Example() {

@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import { getContractInfo } from "@/utils/contracts";
-import Pair from "@/utils/contracts/Pair.json";
+import CoinsPair from "@/utils/contracts/CoinsPair.json";
 import ERC20 from "@/utils/contracts/ERC20.json";
 
 export default async function handler(req, res) {
@@ -27,7 +27,7 @@ export default async function handler(req, res) {
       const pairAddress = await contract.allPairs(i - 1);
       const Pair = new ethers.Contract(
         pairAddress,
-        Pair.abi,
+        CoinsPair.abi,
         customHttpProvider
       );
 

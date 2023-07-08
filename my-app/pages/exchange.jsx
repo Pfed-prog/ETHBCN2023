@@ -216,7 +216,7 @@ export default function Exchange() {
           </div>
           <div className="rounded-2xl mt-5  bg-gray-600 p-1">
             <div className="flex justify-center items-center">
-              <span className="  relative text-white  items-center justify-center rounded-md border border-transparent px-3 py-1.5 text-base font-medium text-gray-900">
+              <span className="relative text-white  items-center justify-center rounded-md border border-transparent px-3 py-1.5 text-base font-medium text-gray-900">
                 {swapAmount} {tokenA.name} =
               </span>
               <span className="relative right-5 text-white inline-flex items-center justify-center rounded-md border border-transparent px-3 py-1.5 text-base font-medium text-gray-900 ">
