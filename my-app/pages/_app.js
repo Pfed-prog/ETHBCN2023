@@ -3,7 +3,7 @@ import "@rainbow-me/rainbowkit/styles.css";
 
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { xdc, xdcTestnet } from "wagmi/chains";
+import { xdc } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 
 import { Layout } from "@/components/Layout";
@@ -17,10 +17,7 @@ import { useState } from "react";
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const [queryClient] = useState(() => new QueryClient());
 
-  const { chains, publicClient } = configureChains(
-    [xdc, xdcTestnet],
-    [publicProvider()]
-  );
+  const { chains, publicClient } = configureChains([xdc], [publicProvider()]);
 
   const { connectors } = getDefaultWallets({
     appName: "My RainbowKit App",
