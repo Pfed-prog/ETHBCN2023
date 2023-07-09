@@ -1,13 +1,13 @@
 pragma solidity =0.5.16;
 
-import './interfaces/ITradeCoinERC20.sol';
+import './interfaces/IVisageERC20.sol';
 import './libraries/SafeMath.sol';
 
-contract TradeCoinERC20 is ITradeCoinERC20 {
+contract VisageERC20 is IVisageERC20 {
     using SafeMath for uint;
 
-    string public constant name = 'TradeCoin';
-    string public constant symbol = 'TC';
+    string public constant name = 'Visage';
+    string public constant symbol = 'VF';
     uint8 public constant decimals = 18;
     uint  public totalSupply;
     mapping(address => uint) public balanceOf;
@@ -78,7 +78,7 @@ contract TradeCoinERC20 is ITradeCoinERC20 {
     }
 
     function permit(address owner, address spender, uint value, uint deadline, uint8 v, bytes32 r, bytes32 s) external {
-        require(deadline >= block.timestamp, 'TradeCoin: EXPIRED');
+        require(deadline >= block.timestamp, 'Visage: EXPIRED');
         bytes32 digest = keccak256(
             abi.encodePacked(
                 '\x19\x01',
@@ -87,7 +87,7 @@ contract TradeCoinERC20 is ITradeCoinERC20 {
             )
         );
         address recoveredAddress = ecrecover(digest, v, r, s);
-        require(recoveredAddress != address(0) && recoveredAddress == owner, 'TradeCoin: INVALID_SIGNATURE');
+        require(recoveredAddress != address(0) && recoveredAddress == owner, 'Visage: INVALID_SIGNATURE');
         _approve(owner, spender, value);
     }
 }

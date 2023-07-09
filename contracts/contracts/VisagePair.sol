@@ -1,14 +1,14 @@
 pragma solidity =0.5.16;
 
-import './interfaces/ITradeCoinPair.sol';
-import './TradeCoinERC20.sol';
+import './interfaces/IVisagePair.sol';
+import './VisageERC20.sol';
 import './libraries/Math.sol';
 import './libraries/UQ112x112.sol';
 import './interfaces/IERC20.sol';
-import './interfaces/ITradeCoinFactory.sol';
-import './interfaces/ITradeCoinCallee.sol';
+import './interfaces/IVisageFactory.sol';
+import './interfaces/IVisageCallee.sol';
 
-contract TradeCoinPair is ITradeCoinPair, TradeCoinERC20 {
+contract VisagePair is IVisagePair, VisageERC20 {
     using SafeMath  for uint;
     using UQ112x112 for uint224;
 
@@ -29,7 +29,7 @@ contract TradeCoinPair is ITradeCoinPair, TradeCoinERC20 {
 
     uint private unlocked = 1;
     modifier lock() {
-        require(unlocked == 1, 'TradeCoin: LOCKED');
+        require(unlocked == 1, 'Visage: LOCKED');
         unlocked = 0;
         _;
         unlocked = 1;
@@ -43,7 +43,7 @@ contract TradeCoinPair is ITradeCoinPair, TradeCoinERC20 {
 
     function _safeTransfer(address token, address to, uint value) private {
         (bool success, bytes memory data) = token.call(abi.encodeWithSelector(SELECTOR, to, value));
-        require(success && (data.length == 0 || abi.decode(data, (bool))), 'TradeCoin: TRANSFER_FAILED');
+        require(success && (data.length == 0 || abi.decode(data, (bool))), 'Visage: TRANSFER_FAILED');
     }
 
     event Mint(address indexed sender, uint amount0, uint amount1);
@@ -64,14 +64,14 @@ contract TradeCoinPair is ITradeCoinPair, TradeCoinERC20 {
 
     // called once by the factory at time of deployment
     function initialize(address _token0, address _token1) external {
-        require(msg.sender == factory, 'TradeCoin: FORBIDDEN'); // sufficient check
+        require(msg.sender == factory, 'Visage: FORBIDDEN'); // sufficient check
         token0 = _token0;
         token1 = _token1;
     }
 
     // update reserves and, on the first call per block, price accumulators
     function _update(uint balance0, uint balance1, uint112 _reserve0, uint112 _reserve1) private {
-        require(balance0 <= uint112(-1) && balance1 <= uint112(-1), 'TradeCoin: OVERFLOW');
+        require(balance0 <= uint112(-1) && balance1 <= uint112(-1), 'Visage: OVERFLOW');
         uint32 blockTimestamp = uint32(block.timestamp % 2**32);
         uint32 timeElapsed = blockTimestamp - blockTimestampLast; // overflow is desired
         if (timeElapsed > 0 && _reserve0 != 0 && _reserve1 != 0) {
@@ -87,7 +87,7 @@ contract TradeCoinPair is ITradeCoinPair, TradeCoinERC20 {
 
     // if fee is on, mint liquidity equivalent to 1/6th of the growth in sqrt(k)
     function _mintFee(uint112 _reserve0, uint112 _reserve1) private returns (bool feeOn) {
-        address feeTo = ITradeCoinFactory(factory).feeTo();
+        address feeTo = IVisageFactory(factory).feeTo();
         feeOn = feeTo != address(0);
         uint _kLast = kLast; // gas savings
         if (feeOn) {
@@ -121,7 +121,7 @@ contract TradeCoinPair is ITradeCoinPair, TradeCoinERC20 {
         } else {
             liquidity = Math.min(amount0.mul(_totalSupply) / _reserve0, amount1.mul(_totalSupply) / _reserve1);
         }
-        require(liquidity > 0, 'TradeCoin: INSUFFICIENT_LIQUIDITY_MINTED');
+        require(liquidity > 0, 'Visage: INSUFFICIENT_LIQUIDITY_MINTED');
         _mint(to, liquidity);
 
         _update(balance0, balance1, _reserve0, _reserve1);
@@ -141,7 +141,7 @@ contract TradeCoinPair is ITradeCoinPair, TradeCoinERC20 {
         uint _totalSupply = totalSupply; // gas savings, must be defined here since totalSupply can update in _mintFee
         amount0 = liquidity.mul(balance0) / _totalSupply; // using balances ensures pro-rata distribution
         amount1 = liquidity.mul(balance1) / _totalSupply; // using balances ensures pro-rata distribution
-        require(amount0 > 0 && amount1 > 0, 'TradeCoin: INSUFFICIENT_LIQUIDITY_BURNED');
+        require(amount0 > 0 && amount1 > 0, 'Visage: INSUFFICIENT_LIQUIDITY_BURNED');
         _burn(address(this), liquidity);
         _safeTransfer(_token0, to, amount0);
         _safeTransfer(_token1, to, amount1);
@@ -154,29 +154,29 @@ contract TradeCoinPair is ITradeCoinPair, TradeCoinERC20 {
     }
 
     function swap(uint amount0Out, uint amount1Out, address to, bytes calldata data) external lock {
-        require(amount0Out > 0 || amount1Out > 0, 'TradeCoin: INSUFFICIENT_OUTPUT_AMOUNT');
+        require(amount0Out > 0 || amount1Out > 0, 'Visage: INSUFFICIENT_OUTPUT_AMOUNT');
         (uint112 _reserve0, uint112 _reserve1,) = getReserves(); // gas savings
-        require(amount0Out < _reserve0 && amount1Out < _reserve1, 'TradeCoin: INSUFFICIENT_LIQUIDITY');
+        require(amount0Out < _reserve0 && amount1Out < _reserve1, 'Visage: INSUFFICIENT_LIQUIDITY');
 
         uint balance0;
         uint balance1;
         { // scope for _token{0,1}, avoids stack too deep errors
         address _token0 = token0;
         address _token1 = token1;
-        require(to != _token0 && to != _token1, 'TradeCoin: INVALID_TO');
+        require(to != _token0 && to != _token1, 'Visage: INVALID_TO');
         if (amount0Out > 0) _safeTransfer(_token0, to, amount0Out); // optimistically transfer tokens
         if (amount1Out > 0) _safeTransfer(_token1, to, amount1Out); // optimistically transfer tokens
-        if (data.length > 0) ITradeCoinCallee(to).TradeCoinCall(msg.sender, amount0Out, amount1Out, data);
+        if (data.length > 0) IVisageCallee(to).VisageCall(msg.sender, amount0Out, amount1Out, data);
         balance0 = IERC20(_token0).balanceOf(address(this));
         balance1 = IERC20(_token1).balanceOf(address(this));
         }
         uint amount0In = balance0 > _reserve0 - amount0Out ? balance0 - (_reserve0 - amount0Out) : 0;
         uint amount1In = balance1 > _reserve1 - amount1Out ? balance1 - (_reserve1 - amount1Out) : 0;
-        require(amount0In > 0 || amount1In > 0, 'TradeCoin: INSUFFICIENT_INPUT_AMOUNT');
+        require(amount0In > 0 || amount1In > 0, 'Visage: INSUFFICIENT_INPUT_AMOUNT');
         { // scope for reserve{0,1}Adjusted, avoids stack too deep errors
         uint balance0Adjusted = balance0.mul(1000).sub(amount0In.mul(3));
         uint balance1Adjusted = balance1.mul(1000).sub(amount1In.mul(3));
-        require(balance0Adjusted.mul(balance1Adjusted) >= uint(_reserve0).mul(_reserve1).mul(1000**2), 'TradeCoin: K');
+        require(balance0Adjusted.mul(balance1Adjusted) >= uint(_reserve0).mul(_reserve1).mul(1000**2), 'Visage: K');
         }
 
         _update(balance0, balance1, _reserve0, _reserve1);
