@@ -11,6 +11,8 @@ export default function Profile() {
 
   const provider = new JsonRpcProvider(url);
 
+  console.log(provider);
+
   const [show, setShow] = useState(false);
 
   const { address } = useAccount();

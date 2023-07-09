@@ -7,7 +7,7 @@ contract VisageERC20 is IVisageERC20 {
     using SafeMath for uint;
 
     string public constant name = 'Visage';
-    string public constant symbol = 'VF';
+    string public constant symbol = 'VF2';
     uint8 public constant decimals = 18;
     uint  public totalSupply;
     mapping(address => uint) public balanceOf;

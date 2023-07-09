@@ -4,7 +4,7 @@ import CoinsPair from "@/utils/contracts/CoinsPair.json";
 
 export function getContractInfo(chain) {
   return {
-    addressFactory: "0xb4BbeC5107FfFafc947912E7a05e871A312798bf",
+    addressFactory: "0xf1926218c9D7c198bB3A4A0fbA989e06a4a97267",
     abiFactory: Factory.abi,
   };
 }

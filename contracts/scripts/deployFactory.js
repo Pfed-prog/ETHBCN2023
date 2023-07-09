@@ -4,7 +4,7 @@ async function main() {
   const [deployer] = await ethers.getSigners();
   console.log("Deploying contracts with the account:", deployer.address);
 
-  const Factory = await ethers.getContractFactory("UniswapV2Factory");
+  const Factory = await ethers.getContractFactory("VisageFactory");
   const factory = await Factory.deploy(deployer.address);
   await factory.deployed();
 

@@ -3,7 +3,7 @@ import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 import { ethers } from "ethers";
 import React, { useState } from "react";
-import { useAccount } from "wagmi";
+import { useAccount, useWalletClient } from "wagmi";
 
 import { getContractInfo, getERC20, getPair } from "@/utils/contracts";
 
@@ -29,13 +29,18 @@ export default function Pool() {
     return res.json();
   };
 
-  const { data, status } = useQuery(["pools"], () => fetchPools(initialChain));
+  const { data, status } = useQuery(["pools"], () => fetchPools());
 
   const { address } = useAccount();
+  const { data: walletClient } = useWalletClient();
 
   async function startUpload() {
-    const { addressFactory, abiFactory } = getContractInfo(50);
-    const contract = new ethers.Contract(addressFactory, abiFactory, signer);
+    const { addressFactory, abiFactory } = getContractInfo();
+    const contract = new ethers.Contract(
+      addressFactory,
+      abiFactory,
+      walletClient
+    );
     await contract.createPair(tokenA, tokenB),
       {
         gasLimit: 100000,
@@ -46,9 +51,9 @@ export default function Pool() {
     const { abiERC20 } = getERC20();
     const { abiPair } = getPair();
 
-    const token0 = new ethers.Contract(address0, abiERC20, signer);
-    const token1 = new ethers.Contract(address1, abiERC20, signer);
-    const pair = new ethers.Contract(pairAddress, abiPair, signer);
+    const token0 = new ethers.Contract(address0, abiERC20, walletClient);
+    const token1 = new ethers.Contract(address1, abiERC20, walletClient);
+    const pair = new ethers.Contract(pairAddress, abiPair, walletClient);
 
     await token0.transfer(pairAddress, expandTo18Decimals(tokenAQuantity), {
       gasLimit: 100000,
@@ -66,7 +71,7 @@ export default function Pool() {
   async function removeLiquidity(pairAddress) {
     const { abiPair } = getPair();
 
-    const pair = new ethers.Contract(pairAddress, abiPair, signer);
+    const pair = new ethers.Contract(pairAddress, abiPair, walletClient);
 
     await pair.transfer(pair.address, expandTo18Decimals(withdrawalQuantity), {
       gasLimit: 60000,
