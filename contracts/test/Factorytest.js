@@ -1,7 +1,7 @@
 const { ethers } = require("hardhat");
 const { expect } = require("chai");
 
-var UniswapV2Pair = require("../artifacts/contracts/UniswapV2Pair.sol/UniswapV2Pair.json");
+const VisagePair = require("../artifacts/contracts/VisagePair.sol/VisagePair.json");
 
 function expandTo18Decimals(n) {
   return ethers.BigNumber.from(n).mul(ethers.BigNumber.from(10).pow(18));
@@ -15,7 +15,7 @@ describe("factory", function () {
   let deployer, jane;
   beforeEach(async () => {
     [deployer, jane] = await ethers.getSigners();
-    const Factory = await ethers.getContractFactory("UniswapV2Factory");
+    const Factory = await ethers.getContractFactory("VisageFactory");
     factory = await Factory.deploy(deployer.address);
     await factory.deployed();
 
@@ -40,7 +40,7 @@ describe("factory", function () {
 
     const pair = new ethers.Contract(
       pairAddress,
-      JSON.stringify(UniswapV2Pair.abi),
+      JSON.stringify(VisagePair.abi),
       deployer
     ).connect(deployer);
 

@@ -21,8 +21,8 @@ describe("erc 20", function () {
   it("Should set the right details for erc 20", async function () {
     const name = await token.name();
 
-    expect(name).to.eq("XRC Swap");
-    expect(await token.symbol()).to.eq("XRC-SW");
+    expect(name).to.eq("Visage");
+    expect(await token.symbol()).to.eq("VF");
     expect(await token.decimals()).to.eq(18);
     expect(await token.totalSupply()).to.eq(TOTAL_SUPPLY);
     expect(await token.balanceOf(deployer.address)).to.eq(TOTAL_SUPPLY);
