@@ -2,47 +2,44 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Combobox } from "@headlessui/react";
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { CheckIcon } from "@heroicons/react/24/outline";
-import { ethers } from "ethers";
+import { ethers, JsonRpcProvider } from "ethers";
 import { Fragment, useState } from "react";
-// import { useQuery } from "@tanstack/react-query";
 import { useAccount, useWalletClient } from "wagmi";
 
-import { getContractInfo, getERC20, getPair } from "@/utils/contracts";
-
-function expandTo18Decimals(n) {
-  return ethers.BigNumber.from(n).mul(ethers.BigNumber.from(10).pow(18));
-}
+import {
+  getContractInfo,
+  getERC20,
+  getPair,
+  expandTo18Decimals,
+  classNames,
+} from "@/utils/contracts";
 
 const tokens = [
   {
     id: 1,
-    name: "TradeC0",
-    address: "41377a640a0bf48d4c5ab79f63d2e4885659b82a29",
+    name: "Visage",
+    address: "0x2fd323c74cBa5668a3404e4AB6Db9dB0bc9F89a9",
     imageUrl: "/TradeC0.jpg",
   },
   {
     id: 2,
-    name: "TradeC1",
-    address: "4191447b0204cf766eaf5f3f44d31370c870ec3f45",
+    name: "VisageV2",
+    address: "0xb7209552CDEE27dC0EBcdB713D4AbD3ce9dcB551",
     imageUrl: "/TradeC1.jpg",
   },
   {
     id: 3,
     name: "Dspyt",
-    address: "412baca645bf7d8249eee9fd1b67dd2457dc76cdd6",
+    address: "0x1A70Fc7BbDA5442f4Afe2Db91D59584E873032eb",
     imageUrl: "/Dspyt.png",
   },
   {
     id: 4,
-    name: "TradeCoin",
-    address: "413e152ac3ebbb60fd4af26fcfa0938189383a38f1",
+    name: "TestCoin",
+    address: "0x95024031820Eb44D1e12509Cb63CF589A0fD559f",
     imageUrl: "/TradeCoin.png",
   },
 ];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default function Exchange() {
   const [query, setQuery] = useState("");
@@ -54,14 +51,8 @@ export default function Exchange() {
 
   const [swapAmount, setSwapAmount] = useState(0);
 
-  /* const fetchTxs = async () => {
-    const res = await fetch(`/api/xdc/txs`);
-    return res.json();
-  }; */
-
-  // const { data: transactions, status } = useQuery(["txs"], () => fetchTxs());
-  const { data: walletClient } = useWalletClient();
   const { address } = useAccount();
+  const { data: walletClient } = useWalletClient();
 
   const filteredTokens =
     query === ""
@@ -71,37 +62,41 @@ export default function Exchange() {
         });
 
   async function swap() {
-    const { addressFactory, abiFactory } = getContractInfo(50);
+    const { addressFactory, abiFactory } = getContractInfo();
     const { abiPair } = getPair();
     const { abiERC20 } = getERC20();
 
-    const contract = new ethers.Contract(
-      addressFactory,
-      abiFactory,
-      walletClient
-    );
-    const pairAddress = await contract.getPair(tokenA, tokenB);
-    const pair = new ethers.Contract(pairAddress, abiPair, walletClient);
+    const provider = new JsonRpcProvider("https://rpc.xinfin.network");
+    const contract = new ethers.Contract(addressFactory, abiFactory, provider);
+
+    const pairAddress = await contract.getPair(tokenA.address, tokenB.address);
+    var pair = new ethers.Contract(pairAddress, abiPair, provider);
 
     const orderIn = (await pair.token0()) === tokenA ? 0 : 1;
     const orderOut = (await pair.token1()) === tokenB ? 1 : 0;
 
-    const token = new ethers.Contract(tokenA, abiERC20, walletClient);
+    const token0 = new ethers.Contract(tokenA.address, abiERC20, walletClient);
 
-    await token.transfer(pairAddress, expandTo18Decimals(swapAmount), {
+    await token0.transfer(pairAddress, expandTo18Decimals(swapAmount), {
       gasLimit: 60000,
     });
 
+    //console.log(expandTo18Decimals(swapAmount));
+
     const Preserves = await pair.getReserves();
 
-    var amountInWithFee = expandTo18Decimals(swapAmount).mul(996);
+    var amountInWithFee = expandTo18Decimals(swapAmount) * BigInt(996);
 
-    var numerator = amountInWithFee.mul(Preserves[orderOut]);
-    var denominator = Preserves[orderIn].mul(1000).add(amountInWithFee);
+    var numerator = amountInWithFee * Preserves[orderOut];
+    var denominator = Preserves[orderIn] * BigInt(1000) + amountInWithFee;
     var amountOut = numerator / denominator;
 
-    const expectedOutputAmount = ethers.BigNumber.from(String(amountOut));
+    const expectedOutputAmount = amountOut;
 
+    //console.log(amountOut);
+    //console.log(expectedOutputAmount);
+
+    pair = new ethers.Contract(pairAddress, abiPair, walletClient);
     await pair.swap(0, expectedOutputAmount, address, "0x", {
       gasLimit: 200000,
     });

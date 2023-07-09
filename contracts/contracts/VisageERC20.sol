@@ -6,8 +6,8 @@ import './libraries/SafeMath.sol';
 contract VisageERC20 is IVisageERC20 {
     using SafeMath for uint;
 
-    string public constant name = 'Visage';
-    string public constant symbol = 'VF2';
+    string public constant name = 'Dspyt';
+    string public constant symbol = 'DsP';
     uint8 public constant decimals = 18;
     uint  public totalSupply;
     mapping(address => uint) public balanceOf;

@@ -5,11 +5,12 @@ import { ethers } from "ethers";
 import React, { useState } from "react";
 import { useAccount, useWalletClient } from "wagmi";
 
-import { getContractInfo, getERC20, getPair } from "@/utils/contracts";
-
-function expandTo18Decimals(n) {
-  return ethers.BigNumber.from(n).mul(ethers.BigNumber.from(10).pow(18));
-}
+import {
+  getContractInfo,
+  getERC20,
+  getPair,
+  expandTo18Decimals,
+} from "@/utils/contracts";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -41,6 +42,7 @@ export default function Pool() {
       abiFactory,
       walletClient
     );
+
     await contract.createPair(tokenA, tokenB),
       {
         gasLimit: 100000,

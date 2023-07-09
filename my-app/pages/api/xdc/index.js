@@ -15,7 +15,6 @@ export default async function handler(req, res) {
     const Npairs = await contract.allPairsLength();
 
     const currentCount = Number(Npairs);
-    // console.log(currentCount);
 
     let items = [];
 

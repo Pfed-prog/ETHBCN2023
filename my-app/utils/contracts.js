@@ -20,3 +20,11 @@ export function getPair() {
     abiPair: CoinsPair.abi,
   };
 }
+
+export function expandTo18Decimals(n) {
+  return BigInt(n * 10 ** 18);
+}
+
+export function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
